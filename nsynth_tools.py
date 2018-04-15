@@ -1,9 +1,9 @@
-import numpy as np
+import numpy
 
 def swapper(ipath, opath, file1, file2, SC, selective):
     
-    enc1 = np.load(os.path.join(ipath,file1))
-    enc2 = np.load(os.path.join(ipath,file2))
+    enc1 = numpy.load(os.path.join(ipath,file1))
+    enc2 = numpy.load(os.path.join(ipath,file2))
     file1 = file1.replace(".npy","")
     file2 = file2.replace(".npy","")
     
@@ -16,8 +16,8 @@ def swapper(ipath, opath, file1, file2, SC, selective):
     for c in range(num_swaps):
         
         # duplicate encodings
-        A = np.array(enc1)
-        B = np.array(enc2)
+        A = numpy.array(enc1)
+        B = numpy.array(enc2)
         
         # swap channels
         for i in range(len(enc1[0])):
@@ -46,20 +46,20 @@ def swapper(ipath, opath, file1, file2, SC, selective):
                 swapBname += str(SC[i])
                 
         # save encodings with swapped channels
-        np.save(os.path.join(opath,"swap_"+swapAname+".npy"), A)
-        np.save(os.path.join(opath,"swap_"+swapBname+".npy"), B)
+        numpy.save(os.path.join(opath,"swap_"+swapAname+".npy"), A)
+        numpy.save(os.path.join(opath,"swap_"+swapBname+".npy"), B)
 
 
 def mixer(SC, ipath, opath, file1, file2):
     
-    enc1 = np.load(os.path.join(ipath,file1))
-    enc2 = np.load(os.path.join(ipath,file2))
+    enc1 = numpy.load(os.path.join(ipath,file1))
+    enc2 = numpy.load(os.path.join(ipath,file2))
     file1 = file1.replace(".npy","")
     file2 = file2.replace(".npy","")
        
     # duplicate encodings
-    A = np.array(enc1)
-    B = np.array(enc2)
+    A = numpy.array(enc1)
+    B = numpy.array(enc2)
     
     # swap channels
     for i in range(len(enc1[0])):
@@ -79,8 +79,8 @@ def mixer(SC, ipath, opath, file1, file2):
             swapBname += "_"
                 
     # save encodings with swapped channels
-    np.save(os.path.join(opath,"swap_"+swapAname+".npy"), A)
-    np.save(os.path.join(opath,"swap_"+swapBname+".npy"), B)
+    numpy.save(os.path.join(opath,"swap_"+swapAname+".npy"), A)
+    numpy.save(os.path.join(opath,"swap_"+swapBname+".npy"), B)
 
 
 
