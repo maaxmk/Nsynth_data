@@ -1,9 +1,9 @@
 
 # functions for doing NSynth encoding manipulations
-import os
-import numpy as np
+# import os
+# import numpy as np
 
-def swapper(ipath, opath, file1, file2, SC=None, selective=True):
+def swapper(ipath, opath, file1, file2, SC, selective):
     
     enc1 = np.load(os.path.join(ipath,file1))
     enc2 = np.load(os.path.join(ipath,file2))
