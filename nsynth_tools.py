@@ -1,10 +1,4 @@
-
 # functions for doing NSynth encoding manipulations
-import os
-import numpy as np
-
-def horhr(check):
-    print(check)
 
 def swapper(ipath, opath, file1, file2, SC, selective):
     print("here")
