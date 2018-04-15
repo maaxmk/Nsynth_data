@@ -10,7 +10,7 @@ def swapper(ipath, opath, file1, file2, SC=None, selective=True):
     
     
     num_swaps = 1
-    if(!selective):
+    if(not selective):
         num_swaps = 16
     
     for c in range(num_swaps):
@@ -26,7 +26,7 @@ def swapper(ipath, opath, file1, file2, SC=None, selective=True):
                     A[0][i][j] = enc2[0][i][j]
                     B[0][i][j] = enc1[0][i][j]
                     
-                if(j==c and !selective):
+                if(j==c and not selective):
                     A[0][i][j] = enc2[0][i][j]
                     B[0][i][j] = enc1[0][i][j]
         
@@ -34,7 +34,7 @@ def swapper(ipath, opath, file1, file2, SC=None, selective=True):
         swapAname = file1+"-"+file2+"-"
         swapBname = file2+"-"+file1+"-"
         for i in range(16):
-            if(!selective):
+            if(not selective):
                 if(i==c):
                     swapAname += "1"
                     swapBname += "1"
