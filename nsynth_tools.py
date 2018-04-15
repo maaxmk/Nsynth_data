@@ -1,16 +1,16 @@
 
 # functions for doing NSynth encoding manipulations
 
-def swapper(SC, ipath, opath, file1, file2, all_channels=False):
+def swapper(ipath, opath, file1, file2, SC=None, selective=True):
     
-    enc1 = np.load(ipath+file1)
-    enc2 = np.load(ipath+file2)
+    enc1 = np.load(os.path.join(ipath,file1))
+    enc2 = np.load(os.path.join(ipath,file2))
     file1 = file1.replace(".npy","")
     file2 = file2.replace(".npy","")
     
     
     num_swaps = 1
-    if(all_channels):
+    if(!selective):
         num_swaps = 16
     
     for c in range(num_swaps):
@@ -22,11 +22,11 @@ def swapper(SC, ipath, opath, file1, file2, all_channels=False):
         # swap channels
         for i in range(len(enc1[0])):
             for j in range(16):
-                if(SC[j]==1 and all_channels==False):
+                if(SC[j]==1 and selective):
                     A[0][i][j] = enc2[0][i][j]
                     B[0][i][j] = enc1[0][i][j]
                     
-                if(j==c and all_channels):
+                if(j==c and !selective):
                     A[0][i][j] = enc2[0][i][j]
                     B[0][i][j] = enc1[0][i][j]
         
@@ -34,7 +34,7 @@ def swapper(SC, ipath, opath, file1, file2, all_channels=False):
         swapAname = file1+"-"+file2+"-"
         swapBname = file2+"-"+file1+"-"
         for i in range(16):
-            if(all_channels):
+            if(!selective):
                 if(i==c):
                     swapAname += "1"
                     swapBname += "1"
@@ -46,14 +46,14 @@ def swapper(SC, ipath, opath, file1, file2, all_channels=False):
                 swapBname += str(SC[i])
                 
         # save encodings with swapped channels
-        np.save(opath+"swap_"+swapAname+".npy", A)
-        np.save(opath+"swap_"+swapBname+".npy", B)
+        np.save(os.path.join(opath,"swap_"+swapAname+".npy"), A)
+        np.save(os.path.join(opath,"swap_"+swapBname+".npy"), B)
 
 
 def mixer(SC, ipath, opath, file1, file2):
     
-    enc1 = np.load(ipath+file1)
-    enc2 = np.load(ipath+file2)
+    enc1 = np.load(os.path.join(ipath,file1))
+    enc2 = np.load(os.path.join(ipath,file2))
     file1 = file1.replace(".npy","")
     file2 = file2.replace(".npy","")
        
@@ -79,5 +79,8 @@ def mixer(SC, ipath, opath, file1, file2):
             swapBname += "_"
                 
     # save encodings with swapped channels
-    np.save(opath+"swap_"+swapAname+".npy", A)
-    np.save(opath+"swap_"+swapBname+".npy", B)
+    np.save(os.path.join(opath,"swap_"+swapAname+".npy"), A)
+    np.save(os.path.join(opath,"swap_"+swapBname+".npy"), B)
+
+
+
