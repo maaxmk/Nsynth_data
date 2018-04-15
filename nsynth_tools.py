@@ -10,6 +10,7 @@ def swapper(ipath, opath, file1, file2, SC, selective):
     file1 = file1.replace(".npy","")
     file2 = file2.replace(".npy","")
     
+    print("here")
     
     num_swaps = 1
     if(not selective):
