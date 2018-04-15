@@ -4,13 +4,13 @@ import os
 import numpy as np
 
 def swapper(ipath, opath, file1, file2, SC, selective):
-    
+    print("here")
     enc1 = np.load(os.path.join(ipath,file1))
     enc2 = np.load(os.path.join(ipath,file2))
     file1 = file1.replace(".npy","")
     file2 = file2.replace(".npy","")
     
-    print("here")
+    
     
     num_swaps = 1
     if(not selective):
