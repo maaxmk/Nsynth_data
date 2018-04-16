@@ -79,5 +79,5 @@ def mixer(SC, ipath, opath, file1, file2):
             swapBname += "_"
                 
     # save encodings with swapped channels
-    numpy.save(os.path.join(opath,"swap_"+swapAname+".npy"), A)
-    numpy.save(os.path.join(opath,"swap_"+swapBname+".npy"), B)
+    numpy.save(os.path.join(opath,"mix_"+swapAname+".npy"), A)
+    numpy.save(os.path.join(opath,"mix_"+swapBname+".npy"), B)
