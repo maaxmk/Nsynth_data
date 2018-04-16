@@ -49,3 +49,35 @@ def swapper(ipath, opath, file1, file2, SC = numpy.zeros(16), selective = True):
         numpy.save(os.path.join(opath,"swap_"+swapAname+".npy"), A)
         numpy.save(os.path.join(opath,"swap_"+swapBname+".npy"), B)
 
+
+def mixer(SC, ipath, opath, file1, file2):
+    
+    enc1 = numpy.load(os.path.join(ipath,file1))
+    enc2 = numpy.load(os.path.join(ipath,file2))
+    file1 = file1.replace(".npy","")
+    file2 = file2.replace(".npy","")
+       
+    # duplicate encodings
+    A = numpy.array(enc1)
+    B = numpy.array(enc2)
+    
+    # swap channels
+    for i in range(len(enc1[0])):
+        for j in range(16):
+            if(SC[j] > 0.0):
+                A[0][i][j] = enc2[0][i][j]*SC[j] + enc1[0][i][j]*(1.0-SC[j])
+                B[0][i][j] = enc1[0][i][j]*SC[j] + enc2[0][i][j]*(1.0-SC[j])
+        
+    # name encodings with swapped channels
+    swapAname = file1+"-"+file2+"-"
+    swapBname = file2+"-"+file1+"-"
+    for i in range(16):
+        swapAname += str(SC[i])
+        swapBname += str(SC[i])
+        if i < 15:
+            swapAname += "_"
+            swapBname += "_"
+                
+    # save encodings with swapped channels
+    numpy.save(os.path.join(opath,"swap_"+swapAname+".npy"), A)
+    numpy.save(os.path.join(opath,"swap_"+swapBname+".npy"), B)
