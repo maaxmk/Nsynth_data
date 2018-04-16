@@ -1,4 +1,5 @@
 import numpy
+import os
 
 def swapper(ipath, opath, file1, file2, SC, selective):
     
@@ -6,7 +7,7 @@ def swapper(ipath, opath, file1, file2, SC, selective):
     enc2 = numpy.load(os.path.join(ipath,file2))
     file1 = file1.replace(".npy","")
     file2 = file2.replace(".npy","")
-    
+
 
     num_swaps = 1
     if(not selective):
