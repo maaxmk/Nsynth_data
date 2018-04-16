@@ -50,7 +50,7 @@ def swapper(ipath, opath, file1, file2, SC = numpy.zeros(16), selective = True):
         numpy.save(os.path.join(opath,"swap_"+swapBname+".npy"), B)
 
 
-def mixer(SC, ipath, opath, file1, file2):
+def mixer(CM, ipath, opath, file1, file2):
     
     enc1 = numpy.load(os.path.join(ipath,file1))
     enc2 = numpy.load(os.path.join(ipath,file2))
@@ -64,16 +64,16 @@ def mixer(SC, ipath, opath, file1, file2):
     # swap channels
     for i in range(len(enc1[0])):
         for j in range(16):
-            if(SC[j] > 0.0):
-                A[0][i][j] = enc2[0][i][j]*SC[j] + enc1[0][i][j]*(1.0-SC[j])
-                B[0][i][j] = enc1[0][i][j]*SC[j] + enc2[0][i][j]*(1.0-SC[j])
+            if(CM[j] > 0.0):
+                A[0][i][j] = enc2[0][i][j]*CM[j] + enc1[0][i][j]*(1.0-CM[j])
+                B[0][i][j] = enc1[0][i][j]*CM[j] + enc2[0][i][j]*(1.0-CM[j])
         
     # name encodings with swapped channels
     swapAname = file1+"-"+file2+"-"
     swapBname = file2+"-"+file1+"-"
     for i in range(16):
-        swapAname += "%.3f" % SC[i]
-        swapBname += "%.3f" % SC[i]
+        swapAname += "%.3f" % CM[i]
+        swapBname += "%.3f" % CM[i]
         if i < 15:
             swapAname += "_"
             swapBname += "_"
@@ -81,3 +81,28 @@ def mixer(SC, ipath, opath, file1, file2):
     # save encodings with swapped channels
     numpy.save(os.path.join(opath,"mix_"+swapAname+".npy"), A)
     numpy.save(os.path.join(opath,"mix_"+swapBname+".npy"), B)
+
+
+def gain(CG, ipath, opath, file):
+
+    enc = numpy.load(os.path.join(ipath,file))
+    file = file.replace(".npy","")
+
+    # apply gain to channels
+    for i in range(len(enc[0])):
+        for j in range(16):
+            enc[0][i][j] = enc[0][i][j]*CG[j]
+
+    swapName = file+"_"
+    for i in range(16):
+        swapName += "%.3f" % CG[i]
+        if i < 15:
+            swapName += "_"
+                
+    # save encodings with channel gain changes 
+    numpy.save(os.path.join(opath,"gain_"+swapName+".npy"), enc)
+
+
+
+
+
