@@ -1,7 +1,7 @@
 import numpy
 import os
 
-def swapper(ipath, opath, file1, file2, SC = np.zeros(16), selective = True):
+def swapper(ipath, opath, file1, file2, SC = numpy.zeros(16), selective = True):
     
     enc1 = numpy.load(os.path.join(ipath,file1))
     enc2 = numpy.load(os.path.join(ipath,file2))
