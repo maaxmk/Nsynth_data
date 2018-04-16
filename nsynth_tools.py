@@ -72,8 +72,8 @@ def mixer(SC, ipath, opath, file1, file2):
     swapAname = file1+"-"+file2+"-"
     swapBname = file2+"-"+file1+"-"
     for i in range(16):
-        swapAname += str(SC[i])
-        swapBname += str(SC[i])
+        swapAname += "%.3f" % SC[i]
+        swapBname += "%.3f" % SC[i]
         if i < 15:
             swapAname += "_"
             swapBname += "_"
