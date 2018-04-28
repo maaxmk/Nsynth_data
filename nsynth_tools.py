@@ -31,8 +31,8 @@ def swapper(ipath, opath, file1, file2, SC = numpy.zeros(16), selective = True):
                     B[0][i][j] = enc1[0][i][j]
         
         # name encodings with swapped channels
-        swapAname = file1+"-"+file2+"-"
-        swapBname = file2+"-"+file1+"-"
+        swapAname = file1+"-"+file2+"_"
+        swapBname = file2+"-"+file1+"_"
         for i in range(16):
             if(not selective):
                 if(i==c):
@@ -69,8 +69,8 @@ def mixer(CM, ipath, opath, file1, file2):
                 B[0][i][j] = enc1[0][i][j]*CM[j] + enc2[0][i][j]*(1.0-CM[j])
         
     # name encodings with swapped channels
-    swapAname = file1+"-"+file2+"-"
-    swapBname = file2+"-"+file1+"-"
+    swapAname = file1+"-"+file2+"_"
+    swapBname = file2+"-"+file1+"_"
     for i in range(16):
         swapAname += "%.3f" % CM[i]
         swapBname += "%.3f" % CM[i]
