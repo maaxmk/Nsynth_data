@@ -1,7 +1,7 @@
 import numpy
 import os
 
-def swapper(ipath, opath, file1, file2, SC = numpy.zeros(16), selective = True):
+def swapper(ipath, opath, file1, file2, SC = numpy.zeros(16), selective = True, output_invert=True):
     
     enc1 = numpy.load(os.path.join(ipath,file1))
     enc2 = numpy.load(os.path.join(ipath,file2))
@@ -47,10 +47,11 @@ def swapper(ipath, opath, file1, file2, SC = numpy.zeros(16), selective = True):
                 
         # save encodings with swapped channels
         numpy.save(os.path.join(opath,"swap_"+swapAname+".npy"), A)
-        numpy.save(os.path.join(opath,"swap_"+swapBname+".npy"), B)
+        if(output_invert):
+            numpy.save(os.path.join(opath,"swap_"+swapBname+".npy"), B)
 
 
-def mixer(CM, ipath, opath, file1, file2):
+def mixer(CM, ipath, opath, file1, file2, output_invert=True):
     
     enc1 = numpy.load(os.path.join(ipath,file1))
     enc2 = numpy.load(os.path.join(ipath,file2))
@@ -80,7 +81,8 @@ def mixer(CM, ipath, opath, file1, file2):
                 
     # save encodings with swapped channels
     numpy.save(os.path.join(opath,"mix_"+swapAname+".npy"), A)
-    numpy.save(os.path.join(opath,"mix_"+swapBname+".npy"), B)
+    if(output_invert):
+        numpy.save(os.path.join(opath,"mix_"+swapBname+".npy"), B)
 
 
 def gain(CG, ipath, opath, file):
