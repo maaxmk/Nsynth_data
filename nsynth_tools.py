@@ -127,7 +127,7 @@ def SH(file, ipath, opath, SHpos, SHlen):
 
 
     swapName = file+"_"+str(SHpos)+"_"+str(SHlen)
-    numpy.save(os.path.join(opath,"SH_"+swapName+".npy"), enc)
+    numpy.save(os.path.join(opath,"SH_"+swapName+".npy"), A)
 
 
 
