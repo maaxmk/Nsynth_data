@@ -110,6 +110,7 @@ def SH(file, ipath, opath, SHpos, SHlen):
 
     enc = numpy.load(os.path.join(ipath,file))
     file = file.replace(".npy","")
+    newName = file+"_"+str(SHpos)+"_"+str(SHlen)
 
     A = numpy.zeros((1,len(enc[0])+SHlen,16))
 
@@ -120,14 +121,12 @@ def SH(file, ipath, opath, SHpos, SHlen):
         if i < SHpos:
             A[0][i] = enc[0][i]
         if i == SHpos:
-            for j in range(SHlen):
+            for j in range(SHlen+1):
                 A[0][SHpos+j] = enc[0][SHpos]
         if i > SHpos:
             A[0][i+SHlen] = enc[0][i]
 
-
-    swapName = file+"_"+str(SHpos)+"_"+str(SHlen)
-    numpy.save(os.path.join(opath,"SH_"+swapName+".npy"), A)
+    numpy.save(os.path.join(opath,"SH_"+newName+".npy"), A)
 
 
 
