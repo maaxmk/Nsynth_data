@@ -106,5 +106,28 @@ def gain(CG, ipath, opath, file):
 
 
 
+def SH(file, ipath, opath, SHpos, SHlen):
+
+    enc = numpy.load(os.path.join(ipath,file))
+    file = file.replace(".npy","")
+
+    A = numpy.zeros((1,len(enc[0])+SHlen,16))
+
+    SHpos = int((len(enc[0])-1)*SHpos)
+    S = enc[0][SHpos]
+
+    for i in range(len(enc[0])):
+        if i < SHpos:
+            A[0][i] = enc[0][i]
+        if i == SHpos:
+            for j in range(SHlen):
+                A[0][SHpos+j] = enc[0][SHpos]
+        if i > SHpos:
+            A[0][i+SHlen] = enc[0][i]
+
+
+    swapName = file+"_"+str(SHpos)+"_"+str(SHlen)
+    numpy.save(os.path.join(opath,"SH_"+swapName+".npy"), enc)
+
 
 
