@@ -106,26 +106,35 @@ def gain(CG, ipath, opath, file):
 
 
 
-def SH(file, ipath, opath, SHpos, SHlen):
+def SH(file, ipath, opath, SHpos, SHlen, SHonly=False):
 
     enc = numpy.load(os.path.join(ipath,file))
     file = file.replace(".npy","")
     newName = file+"_"+str(SHpos)+"_"+str(SHlen)
 
-    A = numpy.zeros((1,len(enc[0])+SHlen,16))
-
     SHpos = int((len(enc[0])-1)*SHpos)
-    S = enc[0][SHpos]
 
-    for i in range(len(enc[0])):
-        if i < SHpos:
-            A[0][i] = enc[0][i]
-        if i == SHpos:
-            for j in range(SHlen+1):
-                A[0][SHpos+j] = enc[0][SHpos]
-        if i > SHpos:
-            A[0][i+SHlen] = enc[0][i]
+    A = numpy.array()
 
+    if not SHonly:
+        A = numpy.zeros((1,len(enc[0])+SHlen,16))
+
+        for i in range(len(enc[0])):
+            if i < SHpos:
+                A[0][i] = enc[0][i]
+            if i == SHpos:
+                for j in range(SHlen+1):
+                    A[0][SHpos+j] = enc[0][SHpos]
+            if i > SHpos:
+                A[0][i+SHlen] = enc[0][i]
+
+    if SHonly:
+        A = numpy.zeros((1,SHlen,16))
+
+        for i in range(SHlen):
+            A[0][i] = enc[0][SHpos]
+
+    
     numpy.save(os.path.join(opath,"SH_"+newName+".npy"), A)
 
 
