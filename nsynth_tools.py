@@ -12,6 +12,8 @@ def swapper(ipath, opath, file1_full, file2_full, SC = numpy.zeros(16), selectiv
     name_split = file2_full.split("_")
     file2 = name_split[3].replace(".npy","")
 
+    prefix = name_split[0]+"_"+name_split[1]+"_"
+
 
     num_swaps = 1
     if(not selective):
@@ -50,9 +52,9 @@ def swapper(ipath, opath, file1_full, file2_full, SC = numpy.zeros(16), selectiv
                 swapBname += str(SC[i])
                 
         # save encodings with swapped channels
-        numpy.save(os.path.join(opath,"swap_"+swapAname+".npy"), A)
+        numpy.save(os.path.join(opath,prefix+"swap_"+swapAname+".npy"), A)
         if(output_invert):
-            numpy.save(os.path.join(opath,"swap_"+swapBname+".npy"), B)
+            numpy.save(os.path.join(opath,prefix+"swap_"+swapBname+".npy"), B)
 
 
 def mixer(CM, ipath, opath, file1_full, file2_full, output_invert=True):
@@ -63,7 +65,8 @@ def mixer(CM, ipath, opath, file1_full, file2_full, output_invert=True):
     file1 = name_split[3].replace(".npy","")
     name_split = file2_full.split("_")
     file2 = name_split[3].replace(".npy","")
-       
+    prefix = name_split[0]+"_"+name_split[1]+"_"
+
     # duplicate encodings
     A = numpy.array(enc1)
     B = numpy.array(enc2)
@@ -86,9 +89,9 @@ def mixer(CM, ipath, opath, file1_full, file2_full, output_invert=True):
             swapBname += "_"
                 
     # save encodings with swapped channels
-    numpy.save(os.path.join(opath,"mix_"+swapAname+".npy"), A)
+    numpy.save(os.path.join(opath,prefix+"mix_"+swapAname+".npy"), A)
     if(output_invert):
-        numpy.save(os.path.join(opath,"mix_"+swapBname+".npy"), B)
+        numpy.save(os.path.join(opath,prefix+"mix_"+swapBname+".npy"), B)
 
 
 def gain(CG, ipath, opath, file_full):
@@ -96,6 +99,7 @@ def gain(CG, ipath, opath, file_full):
     enc = numpy.load(os.path.join(ipath,file_full))
     name_split = file_full.split("_")
     file = name_split[3].replace(".npy","")
+    prefix = name_split[0]+"_"+name_split[1]+"_"
 
     # apply gain to channels
     for i in range(len(enc[0])):
@@ -109,7 +113,7 @@ def gain(CG, ipath, opath, file_full):
             swapName += "_"
                 
     # save encodings with channel gain changes 
-    numpy.save(os.path.join(opath,"gain_"+swapName+".npy"), enc)
+    numpy.save(os.path.join(opath,prefix+"gain_"+swapName+".npy"), enc)
 
 
 
@@ -119,6 +123,7 @@ def SH(file_full, ipath, opath, SHpos, SHlen, SHonly=False):
     name_split = file_full.split("_")
     file = name_split[3].replace(".npy","")
     newName = file+"_"+str(SHpos)+"_"+str(SHlen)
+    prefix = name_split[0]+"_"+name_split[1]+"_"
 
     SHpos = int((len(enc[0])-1)*SHpos)
 
@@ -143,7 +148,7 @@ def SH(file_full, ipath, opath, SHpos, SHlen, SHonly=False):
             A[0][i] = enc[0][SHpos]
 
     
-    numpy.save(os.path.join(opath,"SH_"+newName+".npy"), A)
+    numpy.save(os.path.join(opath,prefix+"SH_"+newName+".npy"), A)
 
 
 
