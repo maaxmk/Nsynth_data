@@ -3,8 +3,8 @@ import os
 
 def swapper(ipath, opath, file1_full, file2_full, SC = numpy.zeros(16), selective = True, output_invert=True):
     
-    enc1 = numpy.load(os.path.join(ipath,file1))
-    enc2 = numpy.load(os.path.join(ipath,file2))
+    enc1 = numpy.load(os.path.join(ipath,file1_full))
+    enc2 = numpy.load(os.path.join(ipath,file2_full))
 
 
     name_split = file1_full.split("_")
@@ -57,8 +57,8 @@ def swapper(ipath, opath, file1_full, file2_full, SC = numpy.zeros(16), selectiv
 
 def mixer(CM, ipath, opath, file1_full, file2_full, output_invert=True):
     
-    enc1 = numpy.load(os.path.join(ipath,file1))
-    enc2 = numpy.load(os.path.join(ipath,file2))
+    enc1 = numpy.load(os.path.join(ipath,file1_full))
+    enc2 = numpy.load(os.path.join(ipath,file2_full))
     name_split = file1_full.split("_")
     file1 = name_split[3].replace(".npy","")
     name_split = file2_full.split("_")
@@ -93,7 +93,7 @@ def mixer(CM, ipath, opath, file1_full, file2_full, output_invert=True):
 
 def gain(CG, ipath, opath, file_full):
 
-    enc = numpy.load(os.path.join(ipath,file))
+    enc = numpy.load(os.path.join(ipath,file_full))
     name_split = file_full.split("_")
     file = name_split[3].replace(".npy","")
 
