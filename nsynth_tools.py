@@ -1,12 +1,16 @@
 import numpy
 import os
 
-def swapper(ipath, opath, file1, file2, SC = numpy.zeros(16), selective = True, output_invert=True):
+def swapper(ipath, opath, file1_full, file2_full, SC = numpy.zeros(16), selective = True, output_invert=True):
     
     enc1 = numpy.load(os.path.join(ipath,file1))
     enc2 = numpy.load(os.path.join(ipath,file2))
-    file1 = file1.replace(".npy","")
-    file2 = file2.replace(".npy","")
+
+
+    name_split = file1_full.split("_")
+    file1 = name_split[3].replace(".npy","")
+    name_split = file2_full.split("_")
+    file2 = name_split[3].replace(".npy","")
 
 
     num_swaps = 1
@@ -51,12 +55,14 @@ def swapper(ipath, opath, file1, file2, SC = numpy.zeros(16), selective = True, 
             numpy.save(os.path.join(opath,"swap_"+swapBname+".npy"), B)
 
 
-def mixer(CM, ipath, opath, file1, file2, output_invert=True):
+def mixer(CM, ipath, opath, file1_full, file2_full, output_invert=True):
     
     enc1 = numpy.load(os.path.join(ipath,file1))
     enc2 = numpy.load(os.path.join(ipath,file2))
-    file1 = file1.replace(".npy","")
-    file2 = file2.replace(".npy","")
+    name_split = file1_full.split("_")
+    file1 = name_split[3].replace(".npy","")
+    name_split = file2_full.split("_")
+    file2 = name_split[3].replace(".npy","")
        
     # duplicate encodings
     A = numpy.array(enc1)
@@ -85,10 +91,11 @@ def mixer(CM, ipath, opath, file1, file2, output_invert=True):
         numpy.save(os.path.join(opath,"mix_"+swapBname+".npy"), B)
 
 
-def gain(CG, ipath, opath, file):
+def gain(CG, ipath, opath, file_full):
 
     enc = numpy.load(os.path.join(ipath,file))
-    file = file.replace(".npy","")
+    name_split = file_full.split("_")
+    file = name_split[3].replace(".npy","")
 
     # apply gain to channels
     for i in range(len(enc[0])):
@@ -106,10 +113,11 @@ def gain(CG, ipath, opath, file):
 
 
 
-def SH(file, ipath, opath, SHpos, SHlen, SHonly=False):
+def SH(file_full, ipath, opath, SHpos, SHlen, SHonly=False):
 
     enc = numpy.load(os.path.join(ipath,file))
-    file = file.replace(".npy","")
+    name_split = file_full.split("_")
+    file = name_split[3].replace(".npy","")
     newName = file+"_"+str(SHpos)+"_"+str(SHlen)
 
     SHpos = int((len(enc[0])-1)*SHpos)
