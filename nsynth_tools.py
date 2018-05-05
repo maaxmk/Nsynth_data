@@ -59,6 +59,13 @@ def swapper(ipath, opath, file1_full, file2_full, SC = numpy.zeros(16), selectiv
 
 def mixer(CM, ipath, opath, file1_full, file2_full, output_invert=True):
     
+    lerp = False
+    if len(CM)==1:
+        lerp = True
+        val = CM[0]
+        CM = np.full(16,val)
+
+
     enc1 = numpy.load(os.path.join(ipath,file1_full))
     enc2 = numpy.load(os.path.join(ipath,file2_full))
     name_split = file1_full.split("_")
@@ -81,17 +88,27 @@ def mixer(CM, ipath, opath, file1_full, file2_full, output_invert=True):
     # name encodings with swapped channels
     swapAname = file1+"-"+file2+"_"
     swapBname = file2+"-"+file1+"_"
-    for i in range(16):
-        swapAname += "%.3f" % CM[i]
-        swapBname += "%.3f" % CM[i]
-        if i < 15:
-            swapAname += "_"
-            swapBname += "_"
+    if lerp:
+        swapAname += "%.3f" % CM[0]
+        swapBname += "%.3f" % CM[0]
+    else:
+        for i in range(16):
+            swapAname += "%.3f" % CM[i]
+            swapBname += "%.3f" % CM[i]
+            if i < 15:
+                swapAname += "_"
+                swapBname += "_"
                 
     # save encodings with swapped channels
-    numpy.save(os.path.join(opath,prefix+"mix_"+swapAname+".npy"), A)
-    if(output_invert):
-        numpy.save(os.path.join(opath,prefix+"mix_"+swapBname+".npy"), B)
+    if lerp:
+        numpy.save(os.path.join(opath,prefix+"lerp_"+swapAname+".npy"), A)
+        if output_invert:
+            numpy.save(os.path.join(opath,prefix+"lerp_"+swapBname+".npy"), B)
+    else:
+        numpy.save(os.path.join(opath,prefix+"mix_"+swapAname+".npy"), A)
+        if output_invert:
+            numpy.save(os.path.join(opath,prefix+"mix_"+swapBname+".npy"), B)
+    
 
 
 def gain(CG, ipath, opath, file_full):
