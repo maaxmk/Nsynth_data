@@ -63,7 +63,7 @@ def mixer(CM, ipath, opath, file1_full, file2_full, output_invert=True):
     if len(CM)==1:
         lerp = True
         val = CM[0]
-        CM = np.full(16,val)
+        CM = numpy.full(16,val)
 
 
     enc1 = numpy.load(os.path.join(ipath,file1_full))
