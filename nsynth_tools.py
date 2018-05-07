@@ -139,7 +139,7 @@ def SH(file_full, ipath, opath, SHpos, SHlen, Insert=True, Lead=0):
     enc = numpy.load(os.path.join(ipath,file_full))
     name_split = file_full.split("_")
     file = name_split[3].replace(".npy","")
-    newName = file+"_"+str(SHpos)+"_"+str(Lead)+"_"+str(SHlen)
+    newName = file+"_"+("%.3f" % str(SHpos))+"_"+str(Lead)+"_"+str(SHlen)
     prefix = name_split[0]+"_"+name_split[1]+"_"
 
     SHpos = int(round((len(enc[0])-1)*SHpos))
