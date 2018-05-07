@@ -142,10 +142,10 @@ def SH(file_full, ipath, opath, SHpos, SHlen, Insert=True, Lead=0):
     newName = file+"_"+str(SHpos)+"_"+str(Lead)+"_"+str(SHlen)
     prefix = name_split[0]+"_"+name_split[1]+"_"
 
-    SHpos = int((len(enc[0])-1)*SHpos)
+    SHpos = round((len(enc[0])-1)*SHpos)
 
     A
-    
+
     if Insert:
         A = numpy.zeros((1,len(enc[0])+SHlen,16))
 
