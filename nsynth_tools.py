@@ -136,7 +136,7 @@ def gain(CG, ipath, opath, file_full):
 
 def SH(file_full, ipath, opath, SHpos, SHlen, Insert=True, Lead=0):
 
-    enc = numpy.load(os.path.join(ipath,file))
+    enc = numpy.load(os.path.join(ipath,file_full))
     name_split = file_full.split("_")
     file = name_split[3].replace(".npy","")
     newName = file+"_"+str(SHpos)+"_"+str(Lead)+"_"+str(SHlen)
