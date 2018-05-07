@@ -144,8 +144,8 @@ def SH(file_full, ipath, opath, SHpos, SHlen, Insert=True, Lead=0):
 
     SHpos = int((len(enc[0])-1)*SHpos)
 
-    A = numpy.array()
-
+    A
+    
     if Insert:
         A = numpy.zeros((1,len(enc[0])+SHlen,16))
 
