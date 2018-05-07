@@ -164,9 +164,9 @@ def SH(file_full, ipath, opath, SHpos, SHlen, Insert=True, Lead=0):
         for i in range(SHlen+Lead):
 
             if i < Lead:
-                A[0][i] = enc[0][(SHpos-Lead)+i]
+                A[0][i] = enc[0][SHpos+i]
             else:
-                A[0][i] = enc[0][SHpos]
+                A[0][i] = enc[0][SHpos+Lead]
 
     
     numpy.save(os.path.join(opath,prefix+"SH_"+newName+".npy"), A)
